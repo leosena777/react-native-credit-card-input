@@ -80,33 +80,38 @@ export default class CCInput extends Component {
       invalidColor,
       placeholderColor,
       additionalInputProps,
+      onSubmitEditing,
     } = this.props;
+    onSubmitEditing ? onSubmitEditing : () => {};
     return (
-          <View style={[containerStyle]}>
-            {!!label && <Text style={[labelStyle]}>{label}</Text>}
-            <TextInput
-              ref="input"
-              {...additionalInputProps}
-              keyboardType={keyboardType}
-              autoCapitalise="words"
-              autoCorrect={false}
-              style={[
-                s.baseInputStyle,
-                inputStyle,
-                validColor && status === 'valid'
-                  ? {color: validColor}
-                  : invalidColor && status === 'invalid'
-                  ? {color: invalidColor}
-                  : {},
-              ]}
-              underlineColorAndroid={'transparent'}
-              placeholderTextColor={placeholderColor}
-              placeholder={placeholder}
-              value={value}
-              onFocus={this._onFocus}
-              onChangeText={this._onChange}
-            />
-          </View>
+      <View style={[containerStyle]}>
+        {!!label && <Text style={[labelStyle]}>{label}</Text>}
+        <TextInput
+          ref="input"
+          {...additionalInputProps}
+          keyboardType={keyboardType}
+          autoCapitalise="words"
+          autoCorrect={false}
+          style={[
+            s.baseInputStyle,
+            inputStyle,
+            validColor && status === 'valid'
+              ? {color: validColor}
+              : invalidColor && status === 'invalid'
+              ? {color: invalidColor}
+              : {},
+          ]}
+          onSubmitEditing={onSubmitEditing}
+          underlineColorAndroid={'transparent'}
+          placeholderTextColor={placeholderColor}
+          placeholder={placeholder}
+          value={value}
+          onFocus={this._onFocus}
+          onChangeText={this._onChange}
+          returnKeyType="done"
+          blurOnSubmit={false}
+        />
+      </View>
     );
   }
 }
